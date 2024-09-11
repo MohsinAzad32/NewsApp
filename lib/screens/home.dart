@@ -214,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                            padding: const EdgeInsets.all(3.0),
                                             child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
@@ -230,9 +230,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                            padding: const EdgeInsets.all(5.0),
                                             child: Align(
-                                              alignment: Alignment.centerRight,
+                                              alignment: Alignment.centerLeft,
                                               child: Text(
                                                 format.format(date),
                                                 style: const TextStyle(
@@ -281,55 +281,91 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: MediaQuery.of(context).size.height * 0.2,
                         width: MediaQuery.of(context).size.width * 0.3,
                         child: Card(
-                          child: ListTile(
-                            // leading: SizedBox(
-                            //   height: MediaQuery.of(context).size.height * 0.2,
-                            //   width: MediaQuery.of(context).size.width * 0.3,
-                            //   child: ClipRRect(
-                            //     child: Image.network(
-                            //       snapshot.data!.articles![index].urlToImage
-                            //           .toString(),
-                            //       fit: BoxFit.cover,
-                            //     ),
-                            //   ),
-                            // ),
-                            title: Padding(
-                              padding: const EdgeInsets.only(bottom: 5),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    snapshot.data!.articles![index].title
-                                        .toString(),
-                                    maxLines: 3,
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily: 'Times New Roman'),
-                                  ),
-                                  const Spacer(),
-                                  Align(
-                                    alignment: Alignment.bottomLeft,
-                                    child: Text(
-                                      snapshot
-                                          .data!.articles![index].source!.name
+                          child: InkWell(
+                            onTap: () {
+                              final item = snapshot.data!.articles![index];
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder:
+                                      (context, animation, secondaryAnimation) {
+                                    return FadeTransition(
+                                      opacity: animation,
+                                      child: DetailsScreen(
+                                          description: item.content.toString(),
+                                          imageurl: item.urlToImage.toString(),
+                                          title: item.title.toString(),
+                                          url: item.url.toString(),
+                                          date: item.publishedAt.toString(),
+                                          source: item.source!.name.toString()),
+                                    );
+                                  },
+                                  transitionDuration:
+                                      const Duration(seconds: 1),
+                                  reverseTransitionDuration:
+                                      const Duration(seconds: 1),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    return FadeTransition(
+                                      opacity: animation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            child: ListTile(
+                              // leading: SizedBox(
+                              //   height: MediaQuery.of(context).size.height * 0.2,
+                              //   width: MediaQuery.of(context).size.width * 0.3,
+                              //   child: ClipRRect(
+                              //     child: Image.network(
+                              //       snapshot.data!.articles![index].urlToImage
+                              //           .toString(),
+                              //       fit: BoxFit.cover,
+                              //     ),
+                              //   ),
+                              // ),
+                              title: Padding(
+                                padding: const EdgeInsets.only(bottom: 5),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      snapshot.data!.articles![index].title
                                           .toString(),
+                                      maxLines: 3,
                                       style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
                                           color: Colors.black,
                                           fontFamily: 'Times New Roman'),
                                     ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.bottomLeft,
-                                    child: Text(
-                                      format.format(date),
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w300,
-                                          color: Colors.black,
-                                          fontFamily: 'Times New Roman'),
+                                    const Spacer(),
+                                    Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: Text(
+                                        snapshot
+                                            .data!.articles![index].source!.name
+                                            .toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontFamily: 'Times New Roman'),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: Text(
+                                          format.format(date),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w300,
+                                              color: Colors.black,
+                                              fontFamily: 'Times New Roman'),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

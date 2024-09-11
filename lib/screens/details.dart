@@ -27,7 +27,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+      ),
       // appBar: AppBar(
       //   title: const Text(
       //     'Details',
@@ -101,7 +103,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     ),
                     Text(
                       widget.description,
-                      maxLines: 5,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           fontSize: 14,
@@ -111,6 +112,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     ),
                     Center(
                       child: TextButton(
+                          style: const ButtonStyle(
+                              backgroundColor:
+                                  WidgetStatePropertyAll(Colors.blueGrey)),
                           onPressed: readdetails,
                           child: const Text(
                             'More>',
